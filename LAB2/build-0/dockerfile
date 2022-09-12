@@ -1,0 +1,25 @@
+## Desde la imagen base de ubuntu 
+
+FROM ubuntu 
+
+#Actulizamos la paqueteria
+RUN apt update
+
+ARG DEBIAN_FRONTEND=noninteractive 
+
+
+RUN apt install apache2 -y
+RUN apt install apache2-utils -y
+RUN apt clean
+
+#Configuramos apache 2
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+
+#Indica como funcion el contenedor 
+#En el puerto 80
+EXPOSE 80
+
+#Y con el comando apache2ctl
+CMD ["apache2ctl", "-D", "FOREGROUND"]
